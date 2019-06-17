@@ -278,3 +278,20 @@ function updateSize(size: SizeString): void {
     selectedEnum = size;
 };
 updateSize(SizeString.Large);
+
+// Interfaces
+interface PizzaInterface {
+    name: string;
+    sizes: string[]
+};
+interface multiplePizzas {
+    data: PizzaInterface[]
+}
+let pizzaInt: PizzaInterface;
+function createPizza(name: string, sizes: string[]): PizzaInterface {
+    return {
+        name,
+        sizes
+    }
+}
+pizzaInt = createPizza('Super Hot Pizza', ['small', 'Extra Large']);
