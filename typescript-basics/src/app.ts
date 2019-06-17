@@ -250,5 +250,31 @@ const PizzaAssertion: Pizza = { name: 'Spicy', toppings: 2 };
 const serialized = JSON.stringify(PizzaAssertion);
 function getNameFromJSON(obj: string) {
     // Using assertion we access the properties in a JSOn for a pizza type
-    return (JSON.parse(obj) as Pizza).name;
+    return (JSON.parse(obj) as Pizza).toppings;
 }
+
+// Enum Numeric
+enum SizesNum {
+    Small,
+    Medium,
+    Large
+}
+enum SizesNum {
+    ExtraLarge = 3
+}
+const selectedEnumSize = 3;
+console.log("Example of Enum:");
+console.log(SizesNum);
+console.log(SizesNum.Large, SizesNum[SizesNum.Large], SizesNum[selectedEnumSize]);
+
+// String Enum 
+enum SizeString {
+    Small = 'small',
+    Medium = 'medium',
+    Large = 'large'
+};
+let selectedEnum: SizeString = SizeString.Small;
+function updateSize(size: SizeString): void {
+    selectedEnum = size;
+};
+updateSize(SizeString.Large);
