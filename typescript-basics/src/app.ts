@@ -279,10 +279,16 @@ function updateSize(size: SizeString): void {
 };
 updateSize(SizeString.Large);
 
-// Interfaces
-interface PizzaInterface {
+// Interfaces with extensions, index signatures example
+interface Sizes {
+    sizes: string[];
+}
+interface PizzaInterface extends Sizes {
     name: string;
-    sizes: string[]
+    toppings?: number;
+    getAvailableSizes(): string[];
+    // Index Signature
+    [key: number]: string;
 };
 interface multiplePizzas {
     data: PizzaInterface[]
@@ -291,7 +297,13 @@ let pizzaInt: PizzaInterface;
 function createPizza(name: string, sizes: string[]): PizzaInterface {
     return {
         name,
-        sizes
+        sizes,
+        getAvailableSizes() {
+            return this.sizes
+        }
     }
+    //  as PizzaInterface    or    : PizzaInterface next to the function
 }
 pizzaInt = createPizza('Super Hot Pizza', ['small', 'Extra Large']);
+pizzaInt.toppings = 1;
+pizzaInt[0] = 'xyz';
