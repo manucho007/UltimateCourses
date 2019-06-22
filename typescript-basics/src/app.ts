@@ -282,11 +282,12 @@ updateSize(SizeString.Large);
 // Interfaces with extensions, index signatures example
 interface Sizes {
     sizes: string[];
+    availableSizesClass?: string[]
 }
 interface PizzaInterface extends Sizes {
     name: string;
     toppings?: number;
-    getAvailableSizes(): string[];
+    getAvailableSizes?(): string[];
     // Index Signature
     [key: number]: string;
 };
@@ -306,4 +307,87 @@ function createPizza(name: string, sizes: string[]): PizzaInterface {
 }
 pizzaInt = createPizza('Super Hot Pizza', ['small', 'Extra Large']);
 pizzaInt.toppings = 1;
-pizzaInt[0] = 'xyz';
+pizzaInt[0] = 'Index 0';
+console.log('Example of index:');
+console.log(pizzaInt);
+
+// Classes and constructors
+// Constructor
+function PizzaConstructor(name: string) {
+    name = name;
+    // toppingsConst = [];
+}
+// PizzaConstructor.prototype.addTopping = function addTopping(topping: string) {
+//     this.toppingsConst.push(topping)
+// }
+const pizzaConst = PizzaConstructor('Hawaian');
+// pizzaConst.addTopping('Pineaple');
+// pizzaConst.addTopping('Chili');
+console.log('Example of an object from a Constructor:');
+console.log(pizzaConst);
+
+// Classes
+// Setters and Getters (Accessors)
+
+// abstract class SizesClass implements Sizes {    **** Won't allow to create an instance of the class
+class SizesClass implements Sizes {
+    // protected works like private but allows to access from inherited class
+    constructor(public sizes: string[], protected price: number) { }
+
+    set availableSizesClass(sizes: string[]) {
+        this.sizes = sizes;
+    }
+    get availableSizesClass(): string[] {
+        return this.sizes;
+    }
+    set priceClass(price: number) {
+        this.price = price;
+    }
+    get priceClass(): number {
+        return this.price;
+    }
+
+}
+const sizesClass: SizesClass = new SizesClass(['small', 'medium'], 50);
+console.log('Invoke the getter:');
+console.log(sizesClass.availableSizesClass);
+// Invoke the setter
+sizesClass.availableSizesClass = ['large', 'extra-large'];
+console.log(sizesClass.availableSizesClass);
+
+// Inheritance 
+// Class with private and readonly 
+// Added inheritance from the class Sizes above an implement from the interface above
+interface PizzaInterface2 extends Sizes {
+    readonly name: string;
+    updatePrice(price: number): void;
+    addTopping(topping: string): void;
+}
+class PizzaClass extends SizesClass implements PizzaInterface2 {
+
+    public toppingsClass: string[] = [];
+    constructor(readonly name: string, public sizes: string[], price: number) {
+        super(sizes, price);
+
+    }
+    updatePrice(price: number): void {
+        this.price = price;
+    }
+    addTopping(topping: string): void {
+        this.toppingsClass.push(topping);
+    };
+}
+const pizzaClass = new PizzaClass('4 Cheeses', ['small', 'medium'], 50);
+pizzaClass.addTopping('Mozzarella');
+pizzaClass.updatePrice(75);
+console.log('Example of an object from a Class:');
+console.log(pizzaClass);
+console.log('Example from inheritance');
+console.log(pizzaClass.availableSizesClass);
+console.log('Example from inheritance with protected');
+console.log("Pizza price: " + pizzaClass.priceClass);
+
+
+
+
+
