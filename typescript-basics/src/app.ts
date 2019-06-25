@@ -149,7 +149,7 @@ console.log('Example of void type: ' + selectedTopping);
 // Never type is used when the function is never going to return a value
 // function orderError(error: string) {
 //     throw new Error(error);
-//     //Never going to return something
+//     //Never going to return stringOrArray
 // }
 // orderError('Never type example: Something went wrong!');
 
@@ -388,6 +388,62 @@ console.log('Example from inheritance with protected');
 console.log("Pizza price: " + pizzaClass.priceClass);
 
 
+// Static properties -> Useful for util library or functions that don't deal with data sets
+class CouponStatic {
+    static allowed = ['Hot', 'Spicy'];
+    static create(percetage: number) {
+        return `Pizza discount is ${percetage}%`
+    }
+}
+console.log("Example of Static property: " + CouponStatic.create(25) + ` for ${CouponStatic.allowed} pizzas`);
+
+// Function Generics
+class PizzaGeneric {
+    constructor(private name: string, private price: number) { }
+}
+class List<T>{
+    private list: T[] = [];
+
+    addItem(item: any): void {
+        this.list.push(item);
+    }
+    getList(): T[] {
+        return this.list;
+    }
+}
+
+const list = new List<PizzaGeneric>();
+// Generic works on different classes
+list.addItem(new PizzaGeneric('Hooot', 200));
+const pizzasGen = list.getList();
+console.log('Example of function generics with 2 different classes:');
+console.log(pizzasGen);
+const newList = new List<PizzaGeneric>();
+newList.addItem(new PizzaClass('Extremly hot', ['huge', 'small'], 450))
+const pizzaGen2 = newList.getList();
+console.log(pizzaGen2);
+
+
+// Function overloads with generic
+// We need to supply the overload first to get the info from Tsc
+// By declaring the different types of arguments we pass and return
+// Works great on utility function
+function reverse(str: string): string;
+function reverse<T>(arr: T[]): T[];
+function reverse<T>(stringOrArray: string | T[]): string | T[] {
+    if (typeof stringOrArray === 'string') {
+        return stringOrArray
+            .split('')
+            .reverse()
+            .join('')
+    }
+    return stringOrArray.slice().reverse();
+}
+console.log('Example of function overloads:');
+console.log(reverse('Pepperoni'));
+console.log(reverse(['bacon', 'cheese', 'potato']));
+console.log(reverse([1, 2, 3, 4, 5]));
+console.log(reverse([true, true, false]));
 
 
 
