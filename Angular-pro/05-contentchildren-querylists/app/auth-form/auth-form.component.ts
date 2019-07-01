@@ -30,11 +30,12 @@ import { User } from './auth-form.interface';
 export class AuthFormComponent implements AfterContentInit {
 
   showMessage: boolean;
-
+  //Configure ContentChildren with a component as a parameter  
   @ContentChildren(AuthRememberComponent) remember: QueryList<AuthRememberComponent>;
 
   @Output() submitted: EventEmitter<User> = new EventEmitter<User>();
 
+  // After the ng-content has been initialized, we subscribe to the event to mutate showMessage
   ngAfterContentInit() {
     if (this.remember) {
       this.remember.forEach((item) => {
