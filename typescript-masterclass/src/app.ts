@@ -106,3 +106,9 @@ const item: Record<keyof TrackStates, string> = {
 dictionary[0] = item;
 
 // Typeof and Typeguard
+class Song {
+    constructor(public title: string, public duration: string | number) { }
+}
+function getSOngDuration(item: Song) {
+
+}
