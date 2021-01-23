@@ -6,6 +6,18 @@ yarn start
 npm start
 ```
 
+## Content
+
+- IconPrimitive and Special Types
+- Icontsc and tsconfig
+- IconType Aliases and Assertions
+- IconEnums and Interfaces
+- IconClasses, Properties and Inheritance
+- IconGenerics and Overloads
+- IconNamespaces and Modules
+- IconDecorators and Generic Types
+- IconMixins and Advanced Compiler Options
+- IconType Guards and Advanced Types
 ## Resources
 
 There are several resources used inside this course, of which you can read

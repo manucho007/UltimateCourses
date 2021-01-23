@@ -1,3 +1,4 @@
+import color from 'colors';
 // Arrow Functions and implicits returns
 const pizzas = [
   {
@@ -42,7 +43,7 @@ function multiply(a: number, b: number = 25) {
 }
 console.log(
   'Example of deafult function parameter passing only one value instead of two ' +
-    multiply(5)
+    multiply(1)
 );
 
 // Object literal improvements
@@ -65,9 +66,9 @@ console.log(order);
 // }
 // const sum = sumAll([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 // sending as a single value with ...arg
-function sumAll(message: string, ...arr: Array<number>) {
+function sumAll(message: string, ...parameters: Array<number>) {
   console.log(message);
-  return arr.reduce((prev, next) => prev + next);
+  return parameters.reduce((prev, next) => prev + next);
 }
 const sum = sumAll('Rest parameter example:', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 console.log(sum);
@@ -179,11 +180,11 @@ let sumOrder2 = (price: number, quantity: number): number => {
 };
 // Function declared before
 // let sumOrder3:Function;     Not descriptive
-// Better way
+// Better way and basically means we will receive 2 numbers and will return a number
 let sumOrder3: (price: number, quantity: number) => number;
 sumOrder3 = (x, y) => x * y;
-// Or   but it's longer and more difficult to read
-// let sumOrder3: (price: number, quantity: number) => number = (x, y) => x * y;
+// Or   but it's longer and more difficult to read and it's the same as above
+let sumOrderLong: (price: number, quantity: number) => number = (x, y) => x * y;
 const sumName = sumOrder(25, 2);
 const sumArrow = sumOrder2(25, 2);
 const sumShort = sumOrder3(25, 2);
@@ -200,15 +201,15 @@ sumOrder4 = (x, y) => {
   }
   return x;
 };
-const sumOptional = sumOrder4(25);
+const sumOptional = sumOrder4(226);
 console.log(
   `Example of function with optional parameter \nTotal sum: ${sumOptional}`
 );
 
 // Deafult Parameter provides a parameter in the function in case one is not being sent
 let sumOrder5: (price: number, quantity?: number) => number;
-sumOrder5 = (x, y = 1) => x * y;
-const sumDefault = sumOrder5(25, 5);
+sumOrder5 = (x, y = 3) => x * y;
+const sumDefault = sumOrder5(25);
 console.log(
   `Example of function with default parameter \nTotal sum: ${sumDefault}`
 );
@@ -221,13 +222,15 @@ let pizzaObject: { name: string; getName(): string } = {
   },
 };
 
-// Array types
+// Array types  
 let sizes: string[];
 // sizes: ['small', 'medium', 'large'];
 // Generic type
 let toppingsGeneric: Array<string>;
 toppingsGeneric = ['Gouda', 'Chorizo', 'Chicken'];
-// Tupple type tells the order of the types of the parameters entered
+
+
+//*****/ Tupple type tells the order of the types of the parameters entered
 // Useful for a strict data structure
 let pizzaTupple: [string, number, boolean];
 pizzaTupple = ['Hot', 4, true];
@@ -264,11 +267,12 @@ enum SizesNum {
   Large,
 }
 enum SizesNum {
-  ExtraLarge = 3,
+  ExtraLarge = 4,
 }
 const selectedEnumSize = 3;
 console.log('Example of Enum:');
 console.log(SizesNum);
+// We can access the numeric value or the property
 console.log(
   SizesNum.Large,
   SizesNum[SizesNum.Large],
@@ -320,7 +324,7 @@ console.log('Example of index:');
 console.log(pizzaInt);
 
 // Classes and constructors
-// Constructor
+// Constructor done in the old way
 function PizzaConstructor(name: string) {
   name = name;
   // toppingsConst = [];
@@ -335,9 +339,10 @@ console.log('Example of an object from a Constructor:');
 console.log(pizzaConst);
 
 // Classes
-// Setters and Getters (Accessors)
+// Setters and Getters (Accessors) work with the name and are accessed according to the way they are being used
 
-// abstract class SizesClass implements Sizes {    **** Won't allow to create an instance of the class
+// If we add an abstract before the class it means that the class won't be able to be instantiated
+// Useful in cases where it's a class that will be extended to a higher class
 class SizesClass implements Sizes {
   // protected works like private but allows to access from inherited class
   constructor(public sizes: string[], protected price: number) {}
@@ -356,7 +361,7 @@ class SizesClass implements Sizes {
   }
 }
 const sizesClass: SizesClass = new SizesClass(['small', 'medium'], 50);
-console.log('Invoke the getter:');
+// Invoke the getter
 console.log(sizesClass.availableSizesClass);
 // Invoke the setter
 sizesClass.availableSizesClass = ['large', 'extra-large'];
@@ -393,7 +398,7 @@ console.log('Example from inheritance with protected');
 console.log('Pizza price: ' + pizzaClass.priceClass);
 
 // Static properties -> Useful for util library or functions that don't deal with data sets
-class CouponStatic {
+abstract class CouponStatic {
   static allowed = ['Hot', 'Spicy'];
   static create(percetage: number) {
     return `Pizza discount is ${percetage}%`;
@@ -405,7 +410,8 @@ console.log(
     ` for ${CouponStatic.allowed} pizzas`
 );
 
-// Function Generics
+// Function Generics are similar to any but the difference comes when with any you can expect absolutely anything to pass
+// but with a generic you specify the type of data on the moment you call or invoke the function or class
 class PizzaGeneric {
   constructor(private name: string, private price: number) {}
 }
@@ -426,12 +432,12 @@ list.addItem(new PizzaGeneric('Hooot', 200));
 const pizzasGen = list.getList();
 console.log('Example of function generics with 2 different classes:');
 console.log(pizzasGen);
-const newList = new List<PizzaGeneric>();
+const newList = new List<PizzaClass>();
 newList.addItem(new PizzaClass('Extremly hot', ['huge', 'small'], 450));
 const pizzaGen2 = newList.getList();
 console.log(pizzaGen2);
 
-// Function overloads with generic
+// ***Function overloads with generic***
 // We need to supply the overload first to get the info from Tsc
 // By declaring the different types of arguments we pass and return
 // Works great on utility function
@@ -445,6 +451,8 @@ function reverse<T>(stringOrArray: string | T[]): string | T[] {
 }
 console.log('Example of function overloads:');
 console.log(reverse('Pepperoni'));
+// With the overlord and generic allows the compiler to detect the type automatically so if we hover we'll see that
+// it expects an array, and according to the parameters it becomes an array of booleans, numbers or strings, etc
 console.log(reverse(['bacon', 'cheese', 'potato']));
 console.log(reverse([1, 2, 3, 4, 5]));
 console.log(reverse([true, true, false]));
