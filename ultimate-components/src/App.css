@@ -1,8 +1,7 @@
-/* .App {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-} */
+.App {
+  text-align: center;
+}
+
 /* 
 .son {
   flex: 0 1 150px; 
@@ -20,4 +19,20 @@
 }
 button:hover {
   background-color: #4095c6;
+}
+
+form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 20rem;
+}
+
+h1 {
+  font-size: 3em;
+  text-align: center;
+}
+span {
+  text-align: center;
+  font-size: 3em;
 }
