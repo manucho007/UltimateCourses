@@ -38,9 +38,9 @@ const LoaderMessage = ({ loadingMsg, doneMsg, isLoading }) => {
   );
 };
 LoaderMessage.propTypes = {
-  loadingMessage: PropTypes.string.isRequired,
+  loadingMsg: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
-  doneMessage: PropTypes.string.isRequired,
+  doneMsg: PropTypes.string.isRequired,
 };
 
 export default LoaderMessage;
