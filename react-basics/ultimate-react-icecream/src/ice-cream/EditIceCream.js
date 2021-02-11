@@ -28,16 +28,40 @@ const EditIceCream = ({ match, history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   // Generate unique ids with our custom hook
-  const [descriptionId, stockId, quantityId, priceId] = useUniqueIds(4);
+  const [
+    descriptionId,
+    stockId,
+    quantityId,
+    priceId,
+    descriptionErrorId,
+    quantityErrorId,
+    priceErrorId,
+  ] = useUniqueIds(7);
 
-  const descriptionError = useValidation(
+  // focus on the element with an error
+  const formRef = useRef(null);
+
+  // validate our fields with my custom useValidation hook
+  const [descriptionError, descriptionErrorProps] = useValidation(
     menuItem.description,
-    validateDescription
+    descriptionErrorId,
+    hasSubmitted,
+    validateDescription,
+    true
   );
-  const priceError = useValidation(menuItem.price, validatePrice);
-  const quantityError = useValidation(
+  const [priceError, priceErrorProps] = useValidation(
+    menuItem.price,
+    priceErrorId,
+    hasSubmitted,
+    validatePrice,
+    true
+  );
+  const [quantityError, quantityErrorProps] = useValidation(
     menuItem.quantity,
+    quantityErrorId,
+    hasSubmitted,
     validateQuantity,
+    false,
     menuItem.inStock
   );
 
@@ -89,7 +113,15 @@ const EditIceCream = ({ match, history }) => {
     e.preventDefault();
 
     setHasSubmitted(true);
-    if (!priceError && !quantityError && !descriptionError) {
+    // For keyboard users if it finds an error it will focus automatically on it
+    if (priceError || quantityError || descriptionError) {
+      setTimeout(() => {
+        const errorControl = formRef.current.querySelector(
+          '[aria-invalid="true"]'
+        );
+        errorControl.focus();
+      });
+    } else {
       const { id, price, inStock, quantity, description, iceCream } = menuItem;
       const submitItem = {
         id,
@@ -122,13 +154,14 @@ const EditIceCream = ({ match, history }) => {
               <dt>Name:</dt>
               <dd>{menuItem.iceCream.name}</dd>
             </dl>
-            <form onSubmit={onSubmitHandler}>
+            <form onSubmit={onSubmitHandler} noValidate ref={formRef}>
               <label htmlFor={descriptionId}>
                 Description<span aria-hidden="true">*</span>:
               </label>
               <ErrorContainer
                 errorText={descriptionError}
                 hasSubmitted={hasSubmitted}
+                errorId={descriptionErrorId}
               >
                 <textarea
                   name="description"
@@ -136,6 +169,7 @@ const EditIceCream = ({ match, history }) => {
                   value={menuItem.description}
                   onChange={onChangeHandler}
                   id={descriptionId}
+                  {...descriptionErrorProps}
                 />
               </ErrorContainer>
               <label htmlFor={stockId}>In Stock:</label>
@@ -147,19 +181,20 @@ const EditIceCream = ({ match, history }) => {
                   onChange={onChangeHandler}
                   id={stockId}
                 />
-
                 <div className="checkbox-wrapper-checked" />
               </div>
               <label htmlFor={quantityId}>Quantity: </label>
               <ErrorContainer
                 errorText={quantityError}
                 hasSubmitted={hasSubmitted}
+                errorId={quantityErrorId}
               >
                 <select
                   name="quantity"
                   value={menuItem.quantity}
                   onChange={onChangeHandler}
                   id={quantityId}
+                  {...quantityErrorProps}
                 >
                   <option value="0">0</option>
                   <option value="10">10</option>
@@ -175,6 +210,7 @@ const EditIceCream = ({ match, history }) => {
               <ErrorContainer
                 errorText={priceError}
                 hasSubmitted={hasSubmitted}
+                errorId={priceErrorId}
               >
                 <input
                   type="number"
@@ -183,6 +219,7 @@ const EditIceCream = ({ match, history }) => {
                   value={menuItem.price}
                   onChange={onChangeHandler}
                   id={priceId}
+                  {...priceErrorProps}
                 />
               </ErrorContainer>
               <div className="button-container">
