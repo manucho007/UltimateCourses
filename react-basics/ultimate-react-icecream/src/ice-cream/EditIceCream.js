@@ -9,7 +9,7 @@ import ErrorContainer from './ErrorContainer';
 import LoaderMessage from '../structure/LoaderMessage';
 import Main from '../structure/Main';
 // Functions
-import { getMenuItem, putMenuItem } from '../data/iceCreamData';
+import { getMenuItem, putMenuItem, deleteMenuItem } from '../data/iceCreamData';
 import {
   validateDescription,
   validatePrice,
@@ -137,6 +137,12 @@ const EditIceCream = ({ match, history }) => {
     }
   };
 
+  const onDeleteHandler = () => {
+    deleteMenuItem(match.params.menuItemId).then(() => {
+      history.replace('/', { focus: true });
+    });
+  };
+
   return (
     <Main headingText="Update this beauty">
       <LoaderMessage
@@ -225,6 +231,13 @@ const EditIceCream = ({ match, history }) => {
               <div className="button-container">
                 <button type="submit" className="ok">
                   Save
+                </button>
+                <button
+                  className="warning"
+                  type="button"
+                  onClick={onDeleteHandler}
+                >
+                  Delete
                 </button>
               </div>
             </form>

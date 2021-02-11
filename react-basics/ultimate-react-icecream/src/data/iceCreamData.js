@@ -30,3 +30,7 @@ export const putMenuItem = menuItem => {
       throw err;
     });
 };
+
+export const deleteMenuItem = id => {
+  return axios.delete(`/api/menu/${id.toString()}`);
+};
