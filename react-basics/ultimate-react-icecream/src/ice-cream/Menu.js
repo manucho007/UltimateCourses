@@ -3,7 +3,10 @@ import { getMenu } from '../data/iceCreamData';
 import Helmet from 'react-helmet';
 import IceCreamImage from './IceCreamImage';
 import LoaderMessage from '../structure/LoaderMessage';
-const Menu = () => {
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+const Menu = ({ history }) => {
   const [menu, setMenu] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -25,6 +28,16 @@ const Menu = () => {
     };
   }, []);
 
+  const onItemClickHandler = to => {
+    history.push(to);
+  };
+
+  // This is done to avoid the click handler of the section firing and placing 2 browse entries in the browser history
+  const onClickLinkHandler = e => {
+    // It will stop the event from bubbling up in the Dom tree
+    e.stopPropagation();
+  };
+
   return (
     <main>
       <Helmet>
@@ -43,12 +56,24 @@ const Menu = () => {
           {menu.map(
             ({ id, iceCream, inStock, quantity, price, description }) => (
               <li key={id}>
-                <section className="card">
+                <section
+                  className="card"
+                  onClick={() => {
+                    onItemClickHandler(`/menu-items/${id.toString()}`);
+                  }}
+                >
                   <div className="image-container">
                     <IceCreamImage iceCreamId={iceCream.id} />
                   </div>
                   <div className="text-container">
-                    <h3>{iceCream.name}</h3>
+                    <h3>
+                      <Link
+                        to={`/menu-items/${id.toString()}`}
+                        onClick={onClickLinkHandler}
+                      >
+                        {iceCream.name}
+                      </Link>
+                    </h3>
                     <div className="content card-content">
                       <p className="price">{`$${price.toFixed(2)}`}</p>
                       <p className={`stock ${inStock ? '' : 'out'}`}>
@@ -71,4 +96,9 @@ const Menu = () => {
   );
 };
 
+Menu.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }),
+};
 export default Menu;

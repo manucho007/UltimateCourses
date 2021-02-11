@@ -16,7 +16,7 @@ const IceCreamImage = ({ iceCreamId }) => {
 };
 
 IceCreamImage.propTypes = {
-  iceCreamId: PropTypes.number.isRequired,
+  iceCreamId: PropTypes.number,
 };
 
 export default IceCreamImage;
