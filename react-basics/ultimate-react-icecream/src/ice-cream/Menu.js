@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getMenu } from '../data/iceCreamData';
-import Helmet from 'react-helmet';
 import IceCreamImage from './IceCreamImage';
 import LoaderMessage from '../structure/LoaderMessage';
-import { Link } from 'react-router-dom';
+import Main from '../structure/Main';
+import FocusLink from '../structure/FocusLink';
 import PropTypes from 'prop-types';
 
 const Menu = ({ history }) => {
@@ -29,7 +29,7 @@ const Menu = ({ history }) => {
   }, []);
 
   const onItemClickHandler = to => {
-    history.push(to);
+    history.push(to, { focus: true });
   };
 
   // This is done to avoid the click handler of the section firing and placing 2 browse entries in the browser history
@@ -39,13 +39,7 @@ const Menu = ({ history }) => {
   };
 
   return (
-    <main>
-      <Helmet>
-        <title>
-          Rock your tastebuds with one of these! | Ultimate Ice Cream
-        </title>
-      </Helmet>
-      <h2 className="main-heading">Rock your tastebuds with one of these!</h2>
+    <Main headingText="Rock your tastebuds with one of these!">
       <LoaderMessage
         loadingMsg="Loading menu."
         doneMsg="Loading menu complete."
@@ -67,12 +61,12 @@ const Menu = ({ history }) => {
                   </div>
                   <div className="text-container">
                     <h3>
-                      <Link
+                      <FocusLink
                         to={`/menu-items/${id.toString()}`}
                         onClick={onClickLinkHandler}
                       >
                         {iceCream.name}
-                      </Link>
+                      </FocusLink>
                     </h3>
                     <div className="content card-content">
                       <p className="price">{`$${price.toFixed(2)}`}</p>
@@ -92,7 +86,7 @@ const Menu = ({ history }) => {
       ) : (
         !isLoading && <p>Your menu is empty!</p>
       )}
-    </main>
+    </Main>
   );
 };
 
