@@ -13,6 +13,9 @@ const Header = () => {
         <FocusLink to="/" activeClassName="active" exact>
           Menu
         </FocusLink>
+        <FocusLink to="/ice-creams" activeClassName="active">
+          Add Ice Cream
+        </FocusLink>
       </nav>
     </header>
   );

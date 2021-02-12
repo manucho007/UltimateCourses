@@ -26,9 +26,27 @@ export const getIceCreams = () => {
   });
 };
 
+export const getIceCream = id => {
+  return axios
+    .get(`/api/menu/stock-ice-creams/${id.toString()}`)
+    .then(response => response.data)
+    .catch(err => {
+      throw err;
+    });
+};
+
 export const getMenuItem = id => {
   return axios
     .get(`/api/menu/${id}`)
+    .then(response => response.data)
+    .catch(err => {
+      throw err;
+    });
+};
+
+export const postMenuItem = menuItem => {
+  return axios
+    .post(`/api/menu/`, menuItem)
     .then(response => response.data)
     .catch(err => {
       throw err;

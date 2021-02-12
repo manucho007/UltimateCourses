@@ -37,7 +37,10 @@ const IceCreams = ({ history }) => {
               key={id.toString()}
               iceCreamId={id}
               heading={name}
-              to={'/'}
+              to={{
+                pathname: '/menu-items/add',
+                search: `?iceCreamId=${id.toString()}`,
+              }}
               history={history}
             />
           ))}

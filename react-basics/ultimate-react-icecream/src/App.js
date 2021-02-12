@@ -4,6 +4,7 @@ import Footer from './structure/Footer';
 import Menu from './ice-cream/Menu';
 import EditIceCream from './ice-cream/EditIceCream';
 import IceCreams from './ice-cream/IceCreams';
+import AddIceCream from './ice-cream/AddIceCream';
 import {
   BrowserRouter as Router,
   Route,
@@ -22,6 +23,7 @@ const App = () => {
       <Switch>
         <Route path="/" component={Menu} exact />
         <Route path="/ice-creams" component={IceCreams} />
+        <Route path="/menu-items/add" component={AddIceCream} exact />
         <Route path="/menu-items/:menuItemId" component={EditIceCream} />
         <Redirect to="/" />
       </Switch>
