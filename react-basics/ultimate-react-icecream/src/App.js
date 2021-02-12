@@ -3,6 +3,7 @@ import Header from './structure/Header';
 import Footer from './structure/Footer';
 import Menu from './ice-cream/Menu';
 import EditIceCream from './ice-cream/EditIceCream';
+import IceCreams from './ice-cream/IceCreams';
 import {
   BrowserRouter as Router,
   Route,
@@ -20,6 +21,7 @@ const App = () => {
       <Header />
       <Switch>
         <Route path="/" component={Menu} exact />
+        <Route path="/ice-creams" component={IceCreams} />
         <Route path="/menu-items/:menuItemId" component={EditIceCream} />
         <Redirect to="/" />
       </Switch>
