@@ -8,16 +8,16 @@ npm start
 
 ## Content
 
-- IconPrimitive and Special Types
-- Icontsc and tsconfig
-- IconType Aliases and Assertions
-- IconEnums and Interfaces
-- IconClasses, Properties and Inheritance
-- IconGenerics and Overloads
-- IconNamespaces and Modules
-- IconDecorators and Generic Types
-- IconMixins and Advanced Compiler Options
-- IconType Guards and Advanced Types
+- Primitive and Special Types
+- tsc and tsconfig
+- Type Aliases and Assertions
+- Enums and Interfaces
+- Classes, Properties and Inheritance
+- Generics and Overloads
+- Namespaces and Modules
+- Decorators and Generic Types
+- Mixins and Advanced Compiler Options
+- Type Guards and Advanced Types
 ## Resources
 
 There are several resources used inside this course, of which you can read
