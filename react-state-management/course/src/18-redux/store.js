@@ -1,4 +1,5 @@
 import { createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 const todos = (state = { todos: [], todo: '' }, action) => {
   switch (action.type) {
@@ -20,4 +21,4 @@ const todos = (state = { todos: [], todo: '' }, action) => {
   }
 };
 
-export default createStore(combineReducers({ todos }));
+export default createStore(combineReducers({ todos }), composeWithDevTools());

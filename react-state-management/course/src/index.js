@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { App } from './current/App';
+import { AppContainer as App } from './current/App';
+// For Context
+// import { AppContainer } from './current/App';
 
 /* 
   View the reference code for each lesson
@@ -28,6 +29,8 @@ import { App } from './current/App';
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    {/* For context or recoil */}
+    {/* <AppContainer /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );
